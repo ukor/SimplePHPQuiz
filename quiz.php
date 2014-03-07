@@ -1,38 +1,50 @@
 <?php
 
-?>
+//Connect to Db and fetch questions
+require_once('includes/db_conn.php');
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>Val Simple Quiz</title>
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-        
-    </head>
-    <body>
-        <div class="container">
-        	<?php 
-        		$answer_1 = $_POST['question_1'];
+$query = "select * from questions";
+$query_result = $dbc->query($query);
 
-        		// if ($answer_1 == "A") {echo "<span class=\"label label-success\">Success</span>";}
-        		// else
-        		// 	{echo "<span class=\"label label-danger\">Wrong Answer</span>";}
+//Count the number of returned items from the database
+$num_questions_returned = $query_result->num_rows;
+
+//Create an array or returned questions
+$questionsArray = array();
+while ($row = $query_result->fetch_assoc()){
+    $questionsArray[] = $row;
+}
+
+//Create an array of Correct answers
+$correctAnswerArray = array();
+foreach($questionsArray as  $question){
+    $correctAnswerArray[$question['questionid']] = $question['answer'];
+}
 
 
-        		$correctAnswer = false;
+//Build the questions array from query result
+$questions = array();
+foreach($questionsArray as $question) {
+    $questions[$question['questionid']] = $question['name'];
+ }
 
-        		if ($answer_1 == "A") {$correctAnswer = true;}
+//Build the choices array from query result
+$choices = array();
+foreach ($questionsArray as $row) {
+    $choices[$row['questionid']] = array($row['choice1'], $row['choice2'], $row['choice3'], $row['answer']);
+  }
 
-        		if($correctAnswer == true)
-        		{
-        			echo "<span class=\"label label-success\">Success</span>";
-        		}
-        		else
-        			{echo "<span class=\"label label-danger\">Wrong Answer</span>";}
 
-        	?>
 
-        </div>
-    </body>
-</html>
+
+
+
+
+
+
+
+
+
+
+
+

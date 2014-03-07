@@ -1,40 +1,85 @@
 <?php
-include('includes/header.html');
+/**
+ * Created by PhpStorm.
+ * User: Valentine
+ * Date: 3/1/14
+ * Time: 11:05 AM
+ */
 
-$questions = array('What does php stand for?', 'What is the population of Los Angeles?', 'What is the capital of California?');
-$answers = array(
-    array(0 => 'PHP: Hypertext Preprocessor', 'Personal Home Page', 'Programmers Hyper Platform'),
-    array(0 => '8 million', '20 mllion', '9.7 million'),
-    array(0 => 'Sacramento', 'Los Angeles', 'San Francisco')
-    );
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+$rightAnswer = 0;
+$wrongAnswer = 0;
 
+require_once('includes/header.html');
+require_once('includes/functions_list.php');
+require_once('quiz.php');
+
+//Result message
+$message = array();
+
+
+if (isset($_POST['submit'])){
+  foreach($_POST['response'] as $key => $value){
+      if($correctAnswerArray[$key] == $value){
+          $rightAnswer++;
+          $message[] = "Correct Answer";
+      } else {
+          $wrongAnswer++;
+          $message[] = "Wrong Answer";
+      }
+  }
+
+} else {
+    $message[] = "";
+}
 ?>
 
-<h1>Val Okafor Simple PHP Quiz</h1>
-        <form action="quiz.php" method="post" id="quiz">
-       <?php 
-       $pattern = ' ';
-       $replace = '_';
-       for ($num=0; $num < count($questions) ; $num++) { 
-
-        echo "<div class=\"form-group\">";
-        echo "<label for=\"$questions[$num]\">$questions[$num]</label>" ."<ol>";
-        
-       foreach ($answers[$num] as $answer) {
-           $answer_with_no_space = str_replace($pattern, $replace, $answer);
-           echo "<li><input type=\"radio\" id=\"$answer_with_no_space\" value=\"$answer_with_no_space\" name=\"$answer_with_no_space\" />\n";
-           echo "<label for=\"$answer\">$answer</label></li>\n";}
-       echo "</ol>" . "</div>";          
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<ul style="list-style: none";>
+    <?php
+       if (isset($message)){
+           foreach($message as $wrongChoice){
+               echo("<li> {$wrongChoice} </li>");
+           }
        }
+    ?>
+</ul>
+<!---->
+<!--Display form-->
+
+<form action="index.php" method="post">
+
+    <?php
+    foreach($questions as $id => $question) {
+        echo "<div class=\"form-group\">";
+        echo "<h4> $question</h4>"."<ol>";//display the question
+
+        //Display multiple choices
+        foreach ($choices[$id] as $key => $values){
+            echo '<li><input type="radio" name="response['.$id.'] id="'.$id.'" value="' .$values.'"/>';
+        ?>
+            <label for="question-<?php echo($id); ?>"><?php echo($values);?></label></li>
+    <?php
+
+        }
+            echo("</ul>");
+            echo("</div>");
+        }
+       ?>
+
+    <input type="submit" name="submit" class="btn btn-primary" value="Submit Quiz" />
+</form>
 
 
-       ?>   
-      
-
-       	<button type="submit" class="btn btn-primary">Submit Quiz</button>
-    
-        </form>
-
-    <?php include('includes/footer.html') ?>
+    <?php   include('includes/footer.html'); ?>
 
 
+</body>
+</html>

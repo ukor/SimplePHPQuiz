@@ -28,7 +28,7 @@ include('includes/header.html');
 	        	<label class="sr-only" for="wrong_answer3">Wrong Answers 2</label>
 	        	<input type="text" class="form-control" id="wrong_answer3" name="wrong_answer3" placeholder="Wrong answer 3">
         	</div>
-        	 <button type="submit" class="btn btn-primary btn-large">+ Add Question</button>
+        	 <button type="submit" class="btn btn-primary btn-large" value="submit" name="submit">+ Add Question</button>
 
         </form>
      </div>
