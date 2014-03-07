@@ -16,23 +16,23 @@ require_once('includes/functions_list.php');
 require_once('quiz.php');
 
 //Result message
-$message = array();
+//$message = array();
 
 
 if (isset($_POST['submit'])){
   foreach($_POST['response'] as $key => $value){
       if($correctAnswerArray[$key] == $value){
           $rightAnswer++;
-          $message[] = "Correct Answer";
+//          $message[] = "Correct Answer";
       } else {
           $wrongAnswer++;
-          $message[] = "Wrong Answer";
+//          $message[] = "Wrong Answer";
       }
   }
-
-} else {
-    $message[] = "";
 }
+// else {
+//    $message[] = "";
+//}
 ?>
 
 <!doctype html>
@@ -42,16 +42,17 @@ if (isset($_POST['submit'])){
     <title>Document</title>
 </head>
 <body>
-<ul style="list-style: none";>
+<!-- //Display result-->
     <?php
-       if (isset($message)){
-           foreach($message as $wrongChoice){
-               echo("<li> {$wrongChoice} </li>");
-           }
-       }
-    ?>
-</ul>
-<!---->
+       if ($rightAnswer > 0){ ?>
+           <h2><span class="label label-success">You have <?php echo $rightAnswer; ?> correct answers</span></h2>
+           <?php }
+        if ($wrongAnswer > 0) { ?>
+           <h2><span class="label label-danger">You have <?php echo $wrongAnswer; ?> wrong answers</span></h2>
+           <?php
+        }
+     ?>
+
 <!--Display form-->
 
 <form action="index.php" method="post">
