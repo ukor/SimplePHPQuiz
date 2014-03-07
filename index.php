@@ -63,7 +63,9 @@ if (isset($_POST['submit'])){
         echo "<h4> $question</h4>"."<ol>";//display the question
 
         //Display multiple choices
-        foreach ($choices[$id] as $key => $values){
+        $randomChoices = $choices[$id];
+        $randomChoices = shuffle_assoc($randomChoices);
+        foreach ($randomChoices as $key => $values){
             echo '<li><input type="radio" name="response['.$id.'] id="'.$id.'" value="' .$values.'"/>';
         ?>
             <label for="question-<?php echo($id); ?>"><?php echo($values);?></label></li>
