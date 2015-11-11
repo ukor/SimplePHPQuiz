@@ -1,8 +1,8 @@
 <?php 
 
 //Set the database access information as constants
-DEFINE ('DB_USER', 'famous_user');
-DEFINE ('DB_PASSWORD', 'famous_password');
+DEFINE ('DB_USER', 'root');
+DEFINE ('DB_PASSWORD', '');
 DEFINE ('DB_HOST', 'localhost');
 DEFINE ('DB_NAME', 'quizdb');
 

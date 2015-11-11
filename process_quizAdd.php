@@ -35,7 +35,7 @@ $result = $dbc->query($query);
 if($result){
     echo "Your quiz has been saved";
 } else {
-    echo '<h1>System Error</h1>';
+    echo "<h1>System Error</h1>";
 }
 $dbc->close();
 
